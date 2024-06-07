@@ -16,6 +16,9 @@ const User = new mongoose.Schema({
   confirmPassword: {
     type: String
   },
+  age: {
+    type: String
+  },
   gender: {
     type: String
   },
