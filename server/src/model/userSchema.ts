@@ -22,6 +22,10 @@ const User = new mongoose.Schema({
   gender: {
     type: String
   },
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  }
 
 }, { timestamps: true },);
 
