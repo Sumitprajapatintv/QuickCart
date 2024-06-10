@@ -5,6 +5,8 @@ const route = Router();
 
 route.post('./signup', signup);
 
+export default route;
+
 
 
 
