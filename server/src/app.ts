@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import defaultRoutes from './api'
 import connectDb from './utils/connectDb';
+import bodyParser from 'body-parser';
 dotenv.config();
 const morgan = require("morgan");
 
@@ -10,23 +11,9 @@ const port = process.env.PORT || 3000;
 
 app.use(morgan("tiny"));
 
+app.use(bodyParser.json())
+
 connectDb();
-
-// define routes here
-// app.use("/", (req, res) => {
-//   res.send("Hello Worlds");
-// });
-
-// app.listen(3000, () => {
-//   console.log("Server is running on port 3000");
-// });
-// console.log("Hello From ExpressJs");
-
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// });
-
-
 
 app.use('/api', defaultRoutes());
 
