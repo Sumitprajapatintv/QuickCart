@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import defaultRoutes from './api'
+import connectDb from './utils/connectDb';
 dotenv.config();
 const morgan = require("morgan");
 
@@ -8,6 +9,8 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 
 app.use(morgan("tiny"));
+
+connectDb();
 
 // define routes here
 // app.use("/", (req, res) => {
@@ -22,6 +25,8 @@ app.use(morgan("tiny"));
 // app.get('/', (req, res) => {
 //   res.send('Hello World!');
 // });
+
+
 
 app.use('/api', defaultRoutes());
 
