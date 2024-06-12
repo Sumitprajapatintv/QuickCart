@@ -17,7 +17,6 @@ export default (app: Router) => {
 
   route.post('/list', list);
 
-
 };
 
 

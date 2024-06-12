@@ -4,7 +4,6 @@ import { badResponse, internalErrorResponse, successResponse } from "../utility/
 
 export const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log("Hello");
     const { data, err } = await signupService(req.body as any, undefined);
 
     if (data && !err) {
