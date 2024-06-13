@@ -7,6 +7,12 @@ const signupService = async (inputData: any, user: any): Promise<{ data: any; er
     const salt = randomBytes(32);
     const hashedPassword = await argon2.hash(inputData?.password, { salt });
 
+    const result = await User.find({ email: inputData?.email })
+
+    if (result.length != 0) {
+      return { data: null, err: [{ code: 'User already Exist' }] };
+    }
+
     const userRecord = await User.create({
       ...inputData,
       type: 'admin',
@@ -15,7 +21,6 @@ const signupService = async (inputData: any, user: any): Promise<{ data: any; er
     });
     if (userRecord) {
       return { data: userRecord?._id, err: null };
-
     }
     else {
       return { data: null, err: null };
