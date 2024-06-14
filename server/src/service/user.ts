@@ -12,7 +12,6 @@ const signupService = async (inputData: any, user: any): Promise<{ data: any; er
     if (result.length != 0) {
       return { data: null, err: [{ code: 'User already Exist' }] };
     }
-
     const userRecord = await User.create({
       ...inputData,
       type: 'admin',
@@ -30,10 +29,34 @@ const signupService = async (inputData: any, user: any): Promise<{ data: any; er
   }
 }
 
-const login = async (inputData: any, user: any) => {
+const loginService = async (inputData: any, user: any): Promise<{ data: any; token: any, err: any }> => {
   try {
-    const result = await User.create(...inputData);
-    return result;
+    const userRecord = await User.findOne({
+      email: inputData?.email,
+      // $or: [{ email: new RegExp('^' + _.escapeRegExp(email) + '$', 'i') }, { phone: new RegExp('^' + _.escapeRegExp(email) + '$', 'i') }],
+    });
+    if (!userRecord) {
+      return { data: null, token: null, err: { ['Record Not Found']} }
+    }
+    const userJSON: any = userRecord.toJSON()
+    const validPassword = await argon2.verify(userJSON.password, inputData?.password);
+    if (validPassword) {
+      // logger.silly('Password is valid!');
+      // logger.silly('Generating JWT');
+      // const user = authHelper.hideSecrets(userJSON);
+
+      // const { token: accessToken, issued, expires } = encodeSession(process.env.JWT_SECRET, user, config.accessTokenExpiryTime);
+      // const { token: refreshToken, issued: refreshIssued, expires: refreshExpires } = encodeSession(process.env.JWT_REFRESH_TOKEN_SECRET, user, config.refreshTokenExpiryTime);
+
+      // /**
+      //  * Easy as pie, you don't need passport.js anymore :)
+      //  */
+
+      // return { user, tokens: { accessToken, refreshToken }, err: null };
+
+    } else {
+      return { data: null, token: null, err: [{ code: 'INVALID_PASSWORD', msg: "Invalid Password" }] };
+    }
   } catch (error) {
     return error;
   }
