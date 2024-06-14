@@ -19,7 +19,7 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { data, err } = await signupService(req.body as any, undefined);
+    const { data, err } = await loginService(req.body as any, undefined);
 
     if (data && !err) {
       return successResponse(res, { data: data });
