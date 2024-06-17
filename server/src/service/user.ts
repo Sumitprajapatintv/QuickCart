@@ -1,6 +1,7 @@
 import User from "../model/userSchema"
 import IUser from "../interfaces/IUser";
 import { randomBytes } from 'crypto';
+import jwt from 'jsonwebtoken';
 import argon2 from 'argon2';
 const signupService = async (inputData: any, user: any): Promise<{ data: any; err: any }> => {
   try {
@@ -41,6 +42,10 @@ const loginService = async (inputData: any, user: any): Promise<{ data: any; tok
     const userJSON: any = userRecord.toJSON()
     const validPassword = await argon2.verify(userJSON.password, inputData?.password);
     if (validPassword) {
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+        expiresIn: '1h',
+      });
+      return res.status(200).json({ token });
       // logger.silly('Password is valid!');
       // logger.silly('Generating JWT');
       // const user = authHelper.hideSecrets(userJSON);
