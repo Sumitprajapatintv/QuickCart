@@ -3,6 +3,7 @@ import IUser from "../interfaces/IUser";
 import { randomBytes } from 'crypto';
 import jwt from 'jsonwebtoken';
 import argon2 from 'argon2';
+import config from './../config/keys'
 const signupService = async (inputData: any, user: any): Promise<{ data: any; err: any }> => {
   try {
     const salt = randomBytes(32);
@@ -37,33 +38,29 @@ const loginService = async (inputData: any, user: any): Promise<{ data: any; tok
       // $or: [{ email: new RegExp('^' + _.escapeRegExp(email) + '$', 'i') }, { phone: new RegExp('^' + _.escapeRegExp(email) + '$', 'i') }],
     });
     if (!userRecord) {
-      return { data: null, token: null, err: { ['Record Not Found']} }
+      return { data: null, token: null, err: ['Record Not Found'] }
     }
     const userJSON: any = userRecord.toJSON()
     const validPassword = await argon2.verify(userJSON.password, inputData?.password);
+
     if (validPassword) {
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
-        expiresIn: '1h',
-      });
-      return res.status(200).json({ token });
-      // logger.silly('Password is valid!');
-      // logger.silly('Generating JWT');
-      // const user = authHelper.hideSecrets(userJSON);
+      if (validPassword) {
+        const secretKey = config.JWT_SECRET_KEY || 'defaultSecretKey'; // Ensure you replace 'defaultSecretKey' with a secure key for production
 
-      // const { token: accessToken, issued, expires } = encodeSession(process.env.JWT_SECRET, user, config.accessTokenExpiryTime);
-      // const { token: refreshToken, issued: refreshIssued, expires: refreshExpires } = encodeSession(process.env.JWT_REFRESH_TOKEN_SECRET, user, config.refreshTokenExpiryTime);
+        const token = jwt.sign({ _id: userJSON._id?.toString() }, secretKey, {
+          expiresIn: '2 days',
+        });
 
-      // /**
-      //  * Easy as pie, you don't need passport.js anymore :)
-      //  */
+        // Continue with your logic, e.g., sending the token back to the client
+        return { data: userJSON, token: token, err: [] };
+      }
 
-      // return { user, tokens: { accessToken, refreshToken }, err: null };
-
-    } else {
-      return { data: null, token: null, err: [{ code: 'INVALID_PASSWORD', msg: "Invalid Password" }] };
     }
+
+    return { data: null, token: null, err: [{ code: 'INVALID_PASSWORD', msg: "Invalid Password" }] };
+
   } catch (error) {
-    return error;
+    return { data: null, token: null, err: [{ code: 'INVALID_PASSWORD', msg: "Invalid Password" }] };
   }
 }
 
@@ -96,5 +93,6 @@ const update = async (inputData: any, user: any) => {
 }
 
 export {
-  signupService
+  signupService,
+  loginService
 };
