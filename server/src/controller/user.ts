@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { signupService } from "../service/user";
+import { signupService, loginService } from "../service/user";
 import { badResponse, internalErrorResponse, successResponse } from "../utility/responseParser";
 
 export const signup = async (req: Request, res: Response, next: NextFunction) => {
@@ -19,10 +19,10 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { data, err } = await loginService(req.body as any, undefined);
+    const { data, token, err } = await loginService(req.body as any, undefined);
 
-    if (data && !err) {
-      return successResponse(res, { data: data });
+    if (data && token) {
+      return successResponse(res, { data: data, tokens: token });
     } else {
       return badResponse(res, { err: err });
     }
