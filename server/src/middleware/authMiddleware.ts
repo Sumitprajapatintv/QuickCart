@@ -7,7 +7,7 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
   try {
     const secretKey = config.JWT_SECRET_KEY || 'defaultSecretKey';
     const decoded = jwt.verify(token, secretKey);
-    req.userId = decoded.userId;
+    // req.userId = decoded.userId;
     next();
   } catch (error) {
     res.status(401).json({ error: 'Invalid token' });
