@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import IProduct from '../interfaces/IProduct'
 
-const productSchema = new mongoose.Schema({
+const Product = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please enter product name"],
@@ -20,64 +21,64 @@ const productSchema = new mongoose.Schema({
     type: String,
     default: 0
   },
-  images: [
-    {
-      image: {
-        type: String,
-        required: true
-      }
-    }
-  ],
-  category: {
-    type: String,
-    required: [true, "Please enter product category"],
-    enum: {
-      values: [
-        'Electronics',
-        'Mobile Phones',
-        'Laptops',
-        'Accessories',
-        'Headphones',
-        'Food',
-        'Books',
-        'Clothes/Shoes',
-        'Beauty/Health',
-        'Sports',
-        'Outdoor',
-        'Home'
-      ],
-      message: "Please select correct category"
-    }
-  },
+  // images: [
+  //   {
+  //     image: {
+  //       type: String,
+  //       required: true
+  //     }
+  //   }
+  // ],
+  // category: {
+  //   type: String,
+  //   // required: [true, "Please enter product category"],
+  //   enum: {
+  //     values: [
+  //       'Electronics',
+  //       'Mobile Phones',
+  //       'Laptops',
+  //       'Accessories',
+  //       'Headphones',
+  //       'Food',
+  //       'Books',
+  //       'Clothes/Shoes',
+  //       'Beauty/Health',
+  //       'Sports',
+  //       'Outdoor',
+  //       'Home'
+  //     ],
+  //     message: "Please select correct category"
+  //   }
+  // },
   seller: {
     type: String,
-    required: [true, "Please enter product seller"]
+    // required: [true, "Please enter product seller"]
   },
   stock: {
     type: Number,
     required: [true, "Please enter product stock"],
     maxLength: [20, 'Product stock cannot exceed 20']
   },
-  numOfReviews: {
-    type: Number,
-    default: 0
-  },
-  reviews: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-      },
-      rating: {
-        type: String,
-        required: true
-      },
-      comment: {
-        type: String,
-        required: true
-      }
-    }
-  ],
+  // numOfReviews: {
+  //   type: Number,
+  //   default: 0
+  // },
+  // reviews: [
+  //   {
+  //     user: {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: 'User'
+  //     },
+  //     rating: {
+  //       type: String,
+  //       // required: true
+  //     },
+  //     comment: {
+  //       type: String,
+  //       // required: true
+  //     }
+  //   }
+  // ],
   user: {
     type: mongoose.Schema.Types.ObjectId
   }
@@ -87,4 +88,5 @@ const productSchema = new mongoose.Schema({
     default: Date.now()
   }
 })
-module.exports(mongoose.model('Product', productSchema));
+
+export default mongoose.model<IProduct & mongoose.Document>('Product', Product);
