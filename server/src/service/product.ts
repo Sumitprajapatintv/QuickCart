@@ -7,7 +7,6 @@ import config from '../config/keys'
 import Product from '../model/product'
 const createService = async (inputData: any, user: any): Promise<{ _id: any; err: any }> => {
   try {
-    console.log("Hello");
     const item = await Product.create({
       ...inputData,
       createdBy: (user && user?._id) || undefined,
@@ -24,12 +23,31 @@ const createService = async (inputData: any, user: any): Promise<{ _id: any; err
   }
 }
 
-const list = async (inputData: any, user: any) => {
+const listService = async (inputData: any, user: any): Promise<{ list: any; count: any, err: any }> => {
   try {
-    const result = await User.create(...inputData);
-    return result;
+    const result: any = Product.aggregate([
+      {
+        $match: { isDeleted: false }
+      },
+      {
+        $facet: {
+          countDocs: [
+            {
+              $group: {
+                _id: null,
+                count: {
+                  $sum: 1,
+                },
+              },
+            },
+          ],
+          list: [{ $sort: { createdAt: -1 } }]
+        }
+      }
+    ])
+    return { list: result[0].list, count: result[0].list, err: null }
   } catch (error) {
-    return error;
+    return { list: null, count: null, err: error }
   }
 }
 
@@ -45,4 +63,5 @@ const update = async (inputData: any, user: any) => {
 
 export {
   createService,
+  listService
 };
