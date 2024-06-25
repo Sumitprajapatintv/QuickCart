@@ -25,7 +25,7 @@ const createService = async (inputData: any, user: any): Promise<{ _id: any; err
 
 const listService = async (inputData: any, user: any): Promise<{ list: any; count: any, err: any }> => {
   try {
-    const result: any = Product.aggregate([
+    const result: any = await Product.aggregate([
       {
         $match: { isDeleted: false }
       },
@@ -45,7 +45,7 @@ const listService = async (inputData: any, user: any): Promise<{ list: any; coun
         }
       }
     ])
-    return { list: result[0].list, count: result[0].list, err: null }
+    return { list: result[0].list, count: result[0].countDocs, err: null }
   } catch (error) {
     return { list: null, count: null, err: error }
   }
