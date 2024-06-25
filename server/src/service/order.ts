@@ -23,25 +23,70 @@ const createService = async (inputData: any, user: any): Promise<{ _id: any; err
   }
 }
 
-const list = async (inputData: any, user: any) => {
+const listService = async (inputData: any, user: any): Promise<{ list: any; count: any, err: any }> => {
   try {
-    const result = await User.create(...inputData);
-    return result;
+    const result: any = await Product.aggregate([
+      {
+        $match: { isDeleted: false }
+      },
+      {
+        $facet: {
+          countDocs: [
+            {
+              $group: {
+                _id: null,
+                count: {
+                  $sum: 1,
+                },
+              },
+            },
+          ],
+          list: [{ $sort: { createdAt: -1 } }]
+        }
+      }
+    ])
+    return { list: result[0].list, count: result[0].countDocs, err: null }
   } catch (error) {
-    return error;
+    return { list: null, count: null, err: error }
+  }
+}
+
+const getService = async (_id: any, user: any): Promise<{ item: any; err: any }> => {
+  try {
+    const item = await Product.findOne({ isDeleted: false }, []);
+
+    if (item) {
+      const itemJSON = item.toJSON();
+      return { item: itemJSON, err: null };
+    } else return { item: null, err: [{ code: 'RECORD_NOT_FOUND' }] };
+  } catch (error) {
+    return { item: null, err: error }
   }
 }
 
 
-const update = async (inputData: any, user: any) => {
+const updateService = async (id: string, inputData: any, user: any): Promise<{ _id: any; err: any }> => {
   try {
-    const result = await User.create(...inputData);
-    return result;
+    const item = await Product.findOneAndUpdate(
+      { _id: id, isDeleted: false },
+      {
+        ...inputData
+      },
+    );
+
+    if (!item) {
+      return { _id: null, err: [{ code: 'RECORD_NOT_FOUND' }] };
+    }
+
+    return { _id: item._id, err: null };
   } catch (error) {
-    return error;
+    return { _id: null, err: error };
   }
 }
 
 export {
   createService,
+  listService,
+  getService,
+  updateService
 };
