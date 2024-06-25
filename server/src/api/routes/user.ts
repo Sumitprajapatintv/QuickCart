@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { signup, login, get, update, list } from './../../controller/user'
+import { signup, login, get, update, list } from '@/controller/user'
 
 const route = Router();
 export default (app: Router) => {
