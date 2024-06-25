@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import argon2 from 'argon2';
 import config from '../config/keys'
 import Product from '../model/product'
+import mongoose from "mongoose";
 const createService = async (inputData: any, user: any): Promise<{ _id: any; err: any }> => {
   try {
     const item = await Product.create({
@@ -51,17 +52,42 @@ const listService = async (inputData: any, user: any): Promise<{ list: any; coun
   }
 }
 
-
-const update = async (inputData: any, user: any) => {
+const getService = async (_id: any, user: any): Promise<{ item: any; err: any }> => {
   try {
-    const result = await User.create(...inputData);
-    return result;
+    const item = await Product.findOne({ isDeleted: false }, []);
+
+    if (item) {
+      const itemJSON = item.toJSON();
+      return { item: itemJSON, err: null };
+    } else return { item: null, err: [{ code: 'RECORD_NOT_FOUND' }] };
   } catch (error) {
-    return error;
+    return { item: null, err: error }
+  }
+}
+
+
+const updateService = async (id: string, inputData: any, user: any): Promise<{ _id: any; err: any }> => {
+  try {
+    const item = await Product.findOneAndUpdate(
+      { _id: id, isDeleted: false },
+      {
+        ...inputData
+      },
+    );
+
+    if (!item) {
+      return { _id: null, err: [{ code: 'RECORD_NOT_FOUND' }] };
+    }
+
+    return { _id: item._id, err: null };
+  } catch (error) {
+    return { _id: null, err: error };
   }
 }
 
 export {
   createService,
-  listService
+  listService,
+  getService,
+  updateService
 };
