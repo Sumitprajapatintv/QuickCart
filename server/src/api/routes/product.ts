@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { create, list } from '@/controller/product';
+import { create, list, get, update } from '@/controller/product';
 
 const route = Router();
 export default (app: Router) => {
@@ -8,5 +8,9 @@ export default (app: Router) => {
   route.post('/create', create);
 
   route.post('/list', list);
+
+  route.post('/get/:id', get);
+
+  route.post('/update/:_id', update);
 
 };
