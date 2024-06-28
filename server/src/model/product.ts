@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import IProduct from '../interfaces/IProduct'
 
 const Product = new mongoose.Schema({
-  name: {
+  productName: {
     type: String,
     trim: true,
     maxLength: [100, "Product name cannot exceed 100 characters"]
