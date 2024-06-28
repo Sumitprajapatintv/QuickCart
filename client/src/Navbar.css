@@ -1,6 +1,29 @@
 .navbar {
   display: flex;
   align-items: center;
+  justify-content: center;
+  background-color: #d0ebff;
+  gap:100px;
+  padding:28px
+}
+.navbar-center{
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  background-color: aqua;
+  gap:30px;
+}
+.navbar-left{
+  color: #1864ab;
+}
+.search-input{
+  width: 850px;
+  height: 48px;
+}
+
+.logo {
+  padding: 8px;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: 40px;
+  font-weight: bold;
 }
