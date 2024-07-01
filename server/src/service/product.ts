@@ -6,6 +6,7 @@ import argon2 from 'argon2';
 import config from '../config/keys'
 import Product from '../model/product'
 import mongoose from "mongoose";
+import fs from 'fs';
 const createService = async (inputData: any, user: any): Promise<{ _id: any; err: any }> => {
   try {
     const item = await Product.create({
@@ -87,9 +88,35 @@ const updateService = async (id: string, inputData: any, user: any): Promise<{ _
 
 const importdataService = async (inputData: any, user: any): Promise<{  count: any, err: any }> => {
   try {
-   
+    let rawdata = fs.readFileSync('/home/sumitprajapti/NodeProject/QuickCart/server/src/service/data.json');
+    let jsondata= JSON.parse(rawdata as any);
+
+    const insertData:any=[];
+    jsondata.forEach((el:any)=>{
+      const images=[];
+      images.push(el?.galleryThumbnails)
+      insertData.push({
+        productName:el?.title,
+        price:{
+          value:el?.price?.value,
+          currency:el?.price?.currency,
+          },
+        description:el?.description,
+        ratings:{stars:el?.stars,reviewsCount:el?.reviewsCount},
+        images:el?.highResolutionImages,
+        category:"Clothes/Shoes",
+        seller:el?.seller,
+        numOfReviews:el?.reviewsCount,
+        user:"667130061d1dc368da645274"
+      })
+    })
+
+    const result=await Product.insertMany(insertData);
+
+
     return {count: null, err: null }
   } catch (error) {
+    console.log(error);
     return {  count: null, err: error }
   }
 }

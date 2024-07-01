@@ -5,7 +5,6 @@ const Product = new mongoose.Schema({
   productName: {
     type: String,
     trim: true,
-    maxLength: [100, "Product name cannot exceed 100 characters"]
   },
   price: {
     value: {type:String},
@@ -20,9 +19,7 @@ const Product = new mongoose.Schema({
   },
   images: [
     {
-      image: {
-        type: String,
-      }
+      type: String
     }
   ],
   category: {
@@ -52,8 +49,6 @@ const Product = new mongoose.Schema({
   },
   stock: {
     type: Number,
-    required: [true, "Please enter product stock"],
-    maxLength: [20, 'Product stock cannot exceed 20']
   },
   numOfReviews: {
     type: Number,
