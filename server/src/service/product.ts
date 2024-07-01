@@ -7,6 +7,7 @@ import config from '../config/keys'
 import Product from '../model/product'
 import mongoose from "mongoose";
 import fs from 'fs';
+
 const createService = async (inputData: any, user: any): Promise<{ _id: any; err: any }> => {
   try {
     const item = await Product.create({
