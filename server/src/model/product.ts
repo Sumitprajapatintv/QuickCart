@@ -8,15 +8,15 @@ const Product = new mongoose.Schema({
     maxLength: [100, "Product name cannot exceed 100 characters"]
   },
   price: {
-    type: Number,
-    default: 0.0
+    value: {type:String},
+    currency: {type:String}
   },
   description: {
     type: String,
   },
   ratings: {
-    type: String,
-    default: 0
+    stars:{type:Number},
+    reviewsCount:{type:Number}
   },
   images: [
     {

@@ -85,9 +85,19 @@ const updateService = async (id: string, inputData: any, user: any): Promise<{ _
   }
 }
 
+const importdataService = async (inputData: any, user: any): Promise<{  count: any, err: any }> => {
+  try {
+   
+    return {count: null, err: null }
+  } catch (error) {
+    return {  count: null, err: error }
+  }
+}
+
 export {
   createService,
   listService,
   getService,
-  updateService
+  updateService,
+  importdataService
 };
