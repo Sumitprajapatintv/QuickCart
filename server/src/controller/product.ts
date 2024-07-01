@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createService, listService, getService, updateService } from "@/service/product";
+import { createService, listService, getService, updateService,importdataService } from "@/service/product";
 import { badResponse, internalErrorResponse, successResponse } from "../utility/responseParser";
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
@@ -40,6 +40,17 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
     const { _id, err } = await updateService(req.params._id as string, req.body as any, req.body.currentUser);
 
     if (_id && !err) return successResponse(res, { item: { _id } });
+    else return badResponse(res, { errors: (err) });
+  } catch (e) {
+    return internalErrorResponse(e, next);
+  }
+};
+
+export const importdata = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { count, err } = await importdataService(req.body as any, undefined);
+
+    if (count) return successResponse(res, { data: { list, count } });
     else return badResponse(res, { errors: (err) });
   } catch (e) {
     return internalErrorResponse(e, next);
