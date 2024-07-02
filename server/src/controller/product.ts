@@ -10,7 +10,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
     else return badResponse(res, { errors: (err) });
   } catch (e) {
     return internalErrorResponse(e, next);
-  }
+  }  
 };
 export const list = async (req: Request, res: Response, next: NextFunction) => {
   try {
