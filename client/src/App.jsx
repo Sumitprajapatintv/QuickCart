@@ -1,6 +1,10 @@
+import Catogory from "./catogory"
 import Navbar from "./navbar"
 function App() {
-  return <div><Navbar /></div>
+  return <div>
+    <Navbar />
+    <Catogory/>
+    </div>
 
 }
 
