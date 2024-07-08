@@ -1,10 +1,10 @@
 import react from 'react'
-import './Navbar.css';
+import './../style/Navbar.css';
 function Navbar() {
   return <nav className='navbar'>
     <div className='navbar-left'>
       <a href="/" className="logo">
-        QuickCart
+        FlipKart
       </a>
     </div>
     <div className='navbar-center'>
