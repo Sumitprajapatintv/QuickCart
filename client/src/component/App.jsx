@@ -1,10 +1,13 @@
 import Catogory from "./catogory.jsx"
 import Navbar from "./navbar.jsx"
-import { ProductList } from "./ProductList.jsx"
+import "./../style/App.css"
+import { ProductList } from "./ProductList.jsx";
+import Carousels from './Carousels.jsx';
 function App() {
-  return <div>
+  return <div className="app">
     <Navbar />
     <Catogory/>
+    <Carousels/>
     <ProductList/>
     </div>
 }
