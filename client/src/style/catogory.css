@@ -1,0 +1,21 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.catogory{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.4rem 6.2rem;
+  gap:64px;
+  background-color: #fff;
+  margin: 0.4rem 12rem;
+ 
+}
+.catogory-cart{ 
+  display: flex;
+  flex-direction: column;
+}
+.catogort-img{
+  width: 64px;
+}

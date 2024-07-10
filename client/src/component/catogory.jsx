@@ -1,5 +1,5 @@
 import react from 'react'
-import '/home/sumitprajapti/NodeProject/QuickCart/client/src/Catogory.css'
+import './../style/catogory.css'
 function Catogory() {
   return <div className='catogory'>
         <a
