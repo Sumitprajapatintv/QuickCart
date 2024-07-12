@@ -3,12 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import "./../style/carousels.css"
 // import ExampleCarouselImage from 'components/ExampleCarouselImage';
 const images = [
-  "https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=600",
-  "https://images.pexels.com/photos/313782/pexels-photo-313782.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/773471/pexels-photo-773471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/632522/pexels-photo-632522.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/777059/pexels-photo-777059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "http://localhost:5173/src/images/caro1.png",
+  "http://localhost:5173/src/images/caro2.png",
+  "http://localhost:5173/src/images/caro4.png",
 ];
 
 
@@ -31,13 +28,13 @@ function Carousels() {
     setCurrentIndex(index);
   };
   return (
+    <div className="carousels">
     <div className="carousel-images">
          {/* <img src='src/images/caro1.png'/> */}
         <img
           key={currentIndex}
           src={images[currentIndex]}
         />
-        <div className="slide_direction">
         <div className="left" onClick={handlePrevious}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -59,16 +56,18 @@ function Carousels() {
           </svg>
         </div>
         <div className="indicator">
-        {images.map((_, index) => (
-          <div
-            key={index}
-            className={`dot ${currentIndex === index ? "active" : ""}`}
-            onClick={() => handleDotClick(index)}
-          ></div>
-        ))}
+          {images.map((_, index) => (
+            <div
+              key={index}
+              className={`dot ${currentIndex === index ? "active" : ""}`}
+              onClick={() => handleDotClick(index)}
+              >
+
+        </div>
+   ))}
       </div>
-      </div>
-     
+  </div>
+
     </div>
     
   );
