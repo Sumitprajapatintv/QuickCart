@@ -27,7 +27,7 @@ function Carousels() {
     setCurrentIndex(index);
   };
   return (
-    
+
     <div className="carousel-images">
          {/* <img src='src/images/caro1.png'/> */}
         <img
