@@ -4,6 +4,7 @@ import "./../style/App.css"
 import { ProductList } from "./ProductList.jsx";
 import Carousels from './Carousels.jsx';
 function App() {
+  // debugger;
   return <div className="app">
     <Navbar />
     <Catogory/>

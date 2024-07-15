@@ -11,7 +11,6 @@ const images = [
 
 function Carousels() {
 
-  console.log("imges",images);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -28,7 +27,7 @@ function Carousels() {
     setCurrentIndex(index);
   };
   return (
-    <div className="carousels">
+    
     <div className="carousel-images">
          {/* <img src='src/images/caro1.png'/> */}
         <img
@@ -67,8 +66,6 @@ function Carousels() {
    ))}
       </div>
   </div>
-
-    </div>
     
   );
 }
